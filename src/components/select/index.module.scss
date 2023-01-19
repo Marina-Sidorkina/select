@@ -1,0 +1,15 @@
+.select {
+  width: 400px;
+  margin: 0 auto;
+
+  &-title {
+    margin-top: 0;
+    margin-bottom: 4px;
+    font-family: 'Inter', sans-serif;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 20px;
+    color: #333333;
+  }
+}

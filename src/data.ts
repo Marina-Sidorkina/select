@@ -6,6 +6,14 @@ const german = require("./icons/german.jpg") as string;
 const italian = require("./icons/italian.jpg") as string;
 const polish = require("./icons/polish.jpg") as string;
 
+export interface IOption {
+  id: string;
+  value: string;
+  src: string;
+}
+
+export type IOptions = Array<IOption>;
+
 export const OPTIONS = [
   {
     id: uuidv4(),

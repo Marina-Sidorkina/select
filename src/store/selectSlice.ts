@@ -1,34 +1,41 @@
 import {createSlice, PayloadAction} from "@reduxjs/toolkit";
+import {OPTIONS, IOptions, IOption} from "../data";
 
 interface ISelectState {
-  count: number;
-  options: Array<string>;
+  tags: IOptions;
+  options: IOptions;
+  multi: boolean;
 }
 
-const initialState:  ISelectState = {
-  count: 0,
-  options: ['test', 'test-1', 'test-2'],
+const initialState: ISelectState = {
+  tags: [],
+  options: OPTIONS,
+  multi: true,
 }
 
 const selectSlice = createSlice({
   name: 'select',
   initialState,
   reducers: {
-    increment(state, action: PayloadAction<number>) {
-      state.count = state.count + 1;
+    setMulti(state, action: PayloadAction<boolean>) {
+      state.multi = action.payload;
     },
-    decrement(state) {
-      state.count = state.count - 1;
+    setOptions(state, action: PayloadAction<IOptions>) {
+      state.options = action.payload;
     },
-    addItem(state, action) {
-      state.options.push(action.payload);
+    addTag(state, action: PayloadAction<IOption>) {
+      if (state.multi) {
+        state.tags.push(action.payload);
+      } else {
+        state.tags = [action.payload];
+      }
     },
-    removeItem(state) {
-      state.options.pop();
-    }
+    deleteTag(state, action: PayloadAction<string>) {
+      state.tags.filter(tag => tag.id !== action.payload);
+    },
   }
 });
 
 export default selectSlice.reducer;
 
-export const {increment, decrement, removeItem, addItem} = selectSlice.actions;
+export const {setMulti, setOptions, addTag, deleteTag} = selectSlice.actions;
