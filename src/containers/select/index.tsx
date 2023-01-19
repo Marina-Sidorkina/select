@@ -42,9 +42,12 @@ const SelectContainer = (props: {multi: boolean, showIcon: boolean, options: IOp
     return options
         .filter(item => item.value.toLowerCase().startsWith(searchValue.toLowerCase()))
         .map(({id, value, src}) => (
-            <Item key={id} id={id} value={value} src={src} onChange={() => {}} tags={tags}/>
+            <Item key={id}
+                  id={id} value={value}
+                  src={src} onChange={() => {}}
+                  tags={tags} showIcon={props.showIcon}/>
         ));
-  }, [searchValue, options, tags]);
+  }, [searchValue, options, tags, props.showIcon]);
 
   return (
       <Select>

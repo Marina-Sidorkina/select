@@ -2,11 +2,14 @@ import React from "react";
 import styles from "./index.module.scss";
 import {IOptions} from "../../data";
 
-const Item = (props: {id: string; value: string; src: string; onChange: Function, tags: IOptions}) => {
+const Item = (props: {id: string; value: string; src: string; onChange: Function, tags: IOptions, showIcon: boolean}) => {
   return (
     <div className={styles.item} key={props.id}>
       <div className={styles.item_info}>
-        <img className={styles.item_icon} src={props.src} width="21" height="15" alt="flag"/>
+        {props.showIcon
+          ? <img className={styles.item_icon} src={props.src} width="21" height="15" alt="flag"/>
+          : null
+        }
         <div className={styles.item_title}>{props.value}</div>
       </div>
       <div className={styles.item_control}>
