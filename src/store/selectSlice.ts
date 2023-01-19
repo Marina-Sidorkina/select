@@ -32,7 +32,7 @@ const selectSlice = createSlice({
     },
     deleteTag(state, action: PayloadAction<string>) {
       state.tags.filter(tag => tag.id !== action.payload);
-    },
+    }
   }
 });
 

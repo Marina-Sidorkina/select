@@ -1,14 +1,17 @@
 import {useAppDispatch, useAppSelector} from "../../hooks/redux";
-import React, {useCallback, useEffect, useState} from "react";
+import React, {useCallback, useEffect, useMemo, useState} from "react";
 import {setMulti, setOptions} from "../../store/selectSlice";
-import {IOptions} from "../../data";
+import {IOption, IOptions} from "../../data";
 import Select from "../../components/select";
 import Tag from "../../components/tag";
 import Control from "../../components/control";
 import Dropdown from "../../components/dropdown";
+import Item from "../../components/item";
+import Failure from "../../components/failure";
 
 const SelectContainer = (props: {multi: boolean, showIcon: boolean, options: IOptions}) => {
   const [isOpened, setIsOpened] = useState(false);
+  const [searchValue, setSearchValue] = useState('');
   const dispatch = useAppDispatch();
 
   const {options, tags} = useAppSelector(state => ({
@@ -25,7 +28,23 @@ const SelectContainer = (props: {multi: boolean, showIcon: boolean, options: IOp
     onControlButtonClick: useCallback(() => {
       setIsOpened((value) => !value);
     }, []),
+    onItemChange: useCallback((item: IOption) => {
+      if (tags.findIndex(tag => tag.id === item.id) !== -1) {
+        dispatch(setOptions(props.options));
+      }
+    }, [props.options, tags]),
+    onSearch: useCallback((value: string) => {
+      setSearchValue(value);
+    }, []),
   };
+
+  const filteredItems = useMemo(() => {
+    return options
+        .filter(item => item.value.toLowerCase().startsWith(searchValue.toLowerCase()))
+        .map(({id, value, src}) => (
+            <Item key={id} id={id} value={value} src={src} onChange={() => {}} tags={tags}/>
+        ));
+  }, [searchValue, options, tags]);
 
   return (
       <Select>
@@ -36,31 +55,7 @@ const SelectContainer = (props: {multi: boolean, showIcon: boolean, options: IOp
           }
         </Control>
         {isOpened
-          ? (
-              <Dropdown>
-                {
-                  options.map(({id, value, src}) => {
-                    return (
-                        <div className="item" key={id}>
-                          <div className="item-info">
-                            <img className="item-icon" src={src} width="21" height="15" alt="flag"/>
-                            <div className="item-title">{value}</div>
-                          </div>
-                          <div className="item-control">
-                            <input className="item-check" type="checkbox" value={value} id={id}/>
-                            <label htmlFor={id}></label>
-                          </div>
-                        </div>
-                    );
-                  })
-                }
-                <div className="item item_info">
-                  <div className="item-info">
-                    <div className="item-title">Ничего не найдено...</div>
-                  </div>
-                </div>
-              </Dropdown>
-            )
+          ? <Dropdown onChange={callbacks.onSearch} value={searchValue}>{filteredItems.length ? filteredItems : <Failure/>}</Dropdown>
           : null
         }
       </Select>
