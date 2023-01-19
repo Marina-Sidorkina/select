@@ -55,7 +55,9 @@ const SelectContainer = (props: {multi: boolean, showIcon: boolean, options: IOp
           }
         </Control>
         {isOpened
-          ? <Dropdown onChange={callbacks.onSearch} value={searchValue}>{filteredItems.length ? filteredItems : <Failure/>}</Dropdown>
+          ? <Dropdown onChange={callbacks.onSearch} value={searchValue}>
+              {filteredItems.length ? filteredItems : <Failure/>}
+            </Dropdown>
           : null
         }
       </Select>
