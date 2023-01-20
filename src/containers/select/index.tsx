@@ -33,9 +33,11 @@ const SelectContainer = (
   }, [props.multi, props.options, dispatch]);
 
   const callbacks = {
+    // Открытие и закрытие dropdown
     onControlButtonClick: useCallback(() => {
       setIsOpened((value) => !value);
     }, []),
+    // Изменение состояния чекбокса элемента (добавление и удаление тега)
     onItemChange: useCallback((item: IOption, value: boolean) => {
       if (value && tags.findIndex(tag => tag.id === item.id) === -1) {
         dispatch(addTag(item));
@@ -43,14 +45,17 @@ const SelectContainer = (
         dispatch(deleteTag(item.id));
       }
     }, [tags, dispatch]),
+    // Поиск по элементам
     onSearch: useCallback((value: string) => {
       setSearchValue(value);
     }, []),
+    // Удаление выбранного тега
     onTagClose: useCallback((id: string) => {
       dispatch(deleteTag(id));
     }, [dispatch]),
   };
 
+  // Отфильтрованные по значению строки поиска элементы
   const filteredItems = useMemo(() => {
     return options
         .filter(item => item.value.toLowerCase().startsWith(searchValue.toLowerCase()))
@@ -62,6 +67,7 @@ const SelectContainer = (
         ));
   }, [searchValue, options, tags, props.showIcon, callbacks.onItemChange]);
 
+  // Элементы выбранных тегов
   const tagsElements = useMemo(() => {
     return tags.map(tag => (
         <Tag key={tag.id} value={tag.value} id={tag.id} onClick={callbacks.onTagClose}/>
