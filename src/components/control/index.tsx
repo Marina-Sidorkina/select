@@ -20,4 +20,4 @@ const Control = (props: {children: React.ReactNode; onClick: Function; isOpen: b
   )
 }
 
-export default Control;
+export default React.memo(Control);

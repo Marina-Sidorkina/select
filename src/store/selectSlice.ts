@@ -1,5 +1,5 @@
 import {createSlice, PayloadAction} from "@reduxjs/toolkit";
-import {OPTIONS, IOptions, IOption} from "../data";
+import {IOptions, IOption} from "../App";
 
 interface ISelectState {
   tags: IOptions;
@@ -9,7 +9,7 @@ interface ISelectState {
 
 const initialState: ISelectState = {
   tags: [],
-  options: OPTIONS,
+  options: [],
   multi: true,
 }
 
@@ -31,7 +31,7 @@ const selectSlice = createSlice({
       }
     },
     deleteTag(state, action: PayloadAction<string>) {
-      state.tags.filter(tag => tag.id !== action.payload);
+      state.tags = state.tags.filter(tag => tag.id !== action.payload);
     }
   }
 });

@@ -17,4 +17,4 @@ const Dropdown = (props: {children: React.ReactNode; onChange: Function; value: 
   );
 }
 
-export default Dropdown;
+export default React.memo(Dropdown);

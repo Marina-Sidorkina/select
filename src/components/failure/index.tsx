@@ -11,4 +11,4 @@ const Failure = () => {
   );
 }
 
-export default Failure;
+export default React.memo(Failure);

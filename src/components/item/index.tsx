@@ -1,6 +1,6 @@
 import React from "react";
 import styles from "./index.module.scss";
-import {IOptions} from "../../data";
+import {IOptions} from "../../App";
 
 const Item = (props: {id: string; value: string; src: string; onChange: Function, tags: IOptions, showIcon: boolean}) => {
   return (
@@ -17,7 +17,7 @@ const Item = (props: {id: string; value: string; src: string; onChange: Function
                type="checkbox"
                value={props.value}
                id={props.id}
-               onChange={(evt) => props.onChange(props.id, evt.target.checked)}
+               onChange={(evt) => props.onChange({id: props.id, value: props.value, src: props.src}, evt.target.checked)}
                checked={props.tags.findIndex(item => item.id === props.id) !== -1}/>
         <label htmlFor={props.id}></label>
       </div>
@@ -25,4 +25,4 @@ const Item = (props: {id: string; value: string; src: string; onChange: Function
   );
 }
 
-export default Item;
+export default React.memo(Item);
