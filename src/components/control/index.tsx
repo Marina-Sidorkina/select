@@ -6,8 +6,8 @@ const Control = (props: {children: React.ReactNode; onClick: Function; isOpen: b
 
   return (
       <div className={styles.control}>
-        <div className={`${styles['control_field']} ${classValue}`}>
-          <div className={styles['control_text']}>
+        <div className={`${styles.control_field} ${classValue}`}>
+          <div className={styles.control_text}>
             {props.children}
           </div>
           <button type="button" className={styles.control_button} onClick={() => props.onClick()}>
